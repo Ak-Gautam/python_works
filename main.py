@@ -5,6 +5,9 @@ from kivy.clock import Clock
 from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.uix.widget import Widget
 from kivy.vector import Vector
+from kivy.core.window import Window
+
+Window.clearcolor = (0.6, 0.4, 0.8, 1)
 
 
 class PongPaddle(Widget):
@@ -56,7 +59,7 @@ class PongGame(Widget):
 
         # Auto player    
         self.player1.center_y = self.ball.y
-
+        
 
         self.player1.bounce_ball(self.ball)
         self.player2.bounce_ball(self.ball)
@@ -66,7 +69,6 @@ class PongGame(Widget):
         #self.player1.center_y = self.ball.y
         if touch.x > self.width * 3 / 4:
             self.player2.center_y = touch.y
-
 
 class PongApp(App):
     def build(self):
