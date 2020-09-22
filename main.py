@@ -12,7 +12,7 @@ class PongPaddle(Widget):
 
     def bounce_ball(self, ball):
         if self.collide_widget(ball):
-            ball.velocity_x *= -1.1
+            ball.velocity_x *= -1.05
 
 
 class PongBall(Widget):
@@ -25,7 +25,7 @@ class PongBall(Widget):
         self.pos = Vector(*self.velocity) + self.pos
 
 
-# Update - moving the ball by calling the move() and other stuff
+# Update - moving the ball by calling the move()
 class PongGame(Widget):
     ball = ObjectProperty(None)
     player1 = ObjectProperty(None)
@@ -49,13 +49,21 @@ class PongGame(Widget):
         if self.ball.x > self.width - 50:
             self.ball.velocity_x *= -1
             self.player2.score += 1
+        if self.player1.score >= 50:
+            exit()
+        elif self.player2.score >= 50:
+            exit()
+
+        # Auto player    
+        self.player1.center_y = self.ball.y
+
 
         self.player1.bounce_ball(self.ball)
         self.player2.bounce_ball(self.ball)
 
     def on_touch_move(self, touch):
-        if touch.x < self.width / 1 / 4:
-            self.player1.center_y = touch.y
+        #if touch.x < self.width / 1 / 4:
+        #self.player1.center_y = self.ball.y
         if touch.x > self.width * 3 / 4:
             self.player2.center_y = touch.y
 
