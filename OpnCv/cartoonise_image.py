@@ -31,9 +31,12 @@ img_edge = cv2.adaptiveThreshold(img_blur, 255,
 img_edge = cv2.cvtColor(img_edge, cv2.COLOR_GRAY2RGB)                                  
 img_cartoon = cv2.bitwise_and(img_color, img_edge)
 
+img_lab = cv2.cvtColor(img_rgb, cv2.COLOR_RGB2LUV)
+img_blr = cv2.medianBlur(img_lab, 7)
+img_blr = cv2.cvtColor(img_blr, cv2.COLOR_Lab2RGB)
+img_blr = cv2.cvtColor(img_blr, cv2.COLOR_RGB2XYZ)
 
-
-stack = np.hstack([img_rgb, img_cartoon])
+stack = np.hstack([img_rgb, img_cartoon, img_blr])
 
 cv2.imshow('Stacked Images',stack)
-cv2.imwrite('result0.jpg', stack)
+cv2.imwrite('result1.jpg', stack)
