@@ -4,8 +4,16 @@ import os
 
 
 root = tk.Tk()
+root.title("App Opener")
+
 
 apps = []
+
+if os.path.isfile('save.txt'):
+    with open('save.txt', 'r') as f:
+        tempApps = f.read()
+        tempApps = tempApps.split(',')
+        apps = [x for x in tempApps if x.strip()]
 
 def addApp():
 
@@ -15,7 +23,7 @@ def addApp():
 
     apps.append(filename)
 
-    print(filename)
+    #print(filename)
     for app in apps:
         label = tk.Label(frame, text=app, bg = "gray")
         label.pack()
@@ -31,9 +39,18 @@ canavas.pack()
 frame = tk.Frame(root, bg="white")
 frame.place(relwidth=0.8, relheight=0.8, relx=0.1, rely=0.1)
 
-openFile = tk.Button(root, text="Open File", padx=10, pady=5, fg="white", bg="#263D42", command=addApp)
-openFile.pack()
+openFile = tk.Button(root, text="Open File", padx=15, pady=5, fg="white", bg="#263D42", command=addApp)
+openFile.pack(side='left', expand='10')
 
-runApps = tk.Button(root, text="Run Apps", padx=10, pady=5, fg="white", bg="#263D42", command=runApps)
-runApps.pack()
+runApps = tk.Button(root, text="Run Apps", padx=15, pady=5, fg="white", bg="#263D42", command=runApps)
+runApps.pack(side='right', expand='10')
+
+for app in apps:
+    label = tk.Label(frame, text=app)
+    label.pack()
+
 root.mainloop()
+
+with open('save.txt', 'w') as f:
+    for app in apps:
+        f.write(app + ',')
