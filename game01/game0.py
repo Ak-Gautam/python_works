@@ -1,32 +1,33 @@
 import pygame
 import sys
 import math
-from tkinter import ttk
 from tkinter import *
+from tkinter import ttk
 from tkinter import messagebox
 import os
 
-screen = pygame.display.set_mode((900, 900))
+screen = pygame.display.set_mode((800, 800))
 
 class spot:
     def __init__(self, x, y):
         self.i = x
-        self.j = Y
+        self.j = y
         self.f = 0
         self.g = 0
         self.h = 0
         self.neighbors = []
         self.previous = None
         self.obs = False
+        self.closed = False
         self.value = 1
 
     def show(self, color, st):
-        if self.closed == False:
-            pygame.draw.rect(screen, color, (self.i*w, self.j*h, w, h), st)
+        if self.closed == False :
+            pygame.draw.rect(screen, color, (self.i * w, self.j * h, w, h), st)
             pygame.display.update()
 
     def path(self, color, st):
-        pygame.draw.rect(screen, color, (self.i*w, self.j*h, w, h), st)
+        pygame.draw.rect(screen, color, (self.i * w, self.j * h, w, h), st)
         pygame.display.update()
 
     def addNeighbors(self, grid):
@@ -41,33 +42,33 @@ class spot:
         if j > 0 and grid[self.i][j - 1].obs == False:
             self.neighbors.append(grid[self.i][j - 1])
 
+
 cols = 50
 grid = [0 for i in range(cols)]
 row = 50
-
 openSet = []
 closedSet = []
-red = (255, 10, 0)
-green = (0, 255, 10)
-blue = (10, 0, 255)
-grey = (200, 200, 200)
-w = 900/cols
-h = 900/row
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+grey = (220, 220, 220)
+w = 800 / cols
+h = 800 / row
 cameFrom = []
 
-#Creating a 2d array
+# create 2d array
 for i in range(cols):
     grid[i] = [0 for i in range(row)]
 
-#create spots
+# Create Spots
 for i in range(cols):
     for j in range(row):
         grid[i][j] = spot(i, j)
 
-#set start and end points
+
+# Set start and end node
 start = grid[12][5]
 end = grid[3][6]
-
 # SHOW RECT
 for i in range(cols):
     for j in range(row):
@@ -93,20 +94,20 @@ def onsubmit():
     window.quit()
     window.destroy()
 
-#__________________________________________
 window = Tk()
-label = Label(window, text='Start(x, y): ')
+label0 = Label(window, text="Click to create obstacles, press Space to start:")
+label = Label(window, text='Start(x(<48),y(<48)): ')
 startBox = Entry(window)
-label1 = Label(window, text='End(x, y): ')
-endbox = Entry(window)
+label1 = Label(window, text='End(x(<48),y(<48)): ')
+endBox = Entry(window)
 var = IntVar()
-showPath = ttk.Checkbutton(window, text='Show steps:', onvalue=1, offvalue=0, variable=var)
+showPath = ttk.Checkbutton(window, text='Show Steps :', onvalue=1, offvalue=0, variable=var)
 
-submit = Button(window, text='Sibmit', command = onsubmit)
+submit = Button(window, text='Submit', command=onsubmit)
 
-#___________________________________________
-showPath.grid(columnspan=2, row=2)
-submit.grid(columnspan=2, row=3)
+showPath.grid(columnspan=2, row=3)
+submit.grid(columnspan=2, row=4)
+label0.grid(row=2, pady=3)
 label1.grid(row=1, pady=3)
 endBox.grid(row=1, column=1, pady=3)
 startBox.grid(row=0, column=1, pady=3)
@@ -114,7 +115,6 @@ label.grid(row=0, pady=3)
 
 window.update()
 mainloop()
-
 
 pygame.init()
 openSet.append(start)
@@ -130,11 +130,10 @@ def mousePress(x):
             acess.obs = True
             acess.show((255, 255, 255), 0)
 
-end.show((255, 10, 125), 0)    
-start.show((100, 10, 130), 0)
+end.show((255, 8, 127), 0)
+start.show((255, 8, 127), 0)
 
 loop = True
-
 while loop:
     ev = pygame.event.get()
 
@@ -156,14 +155,12 @@ for i in range(cols):
     for j in range(row):
         grid[i][j].addNeighbors(grid)
 
-#____________________________________
 def heurisitic(n, e):
-    #change d for different heurisitic
     d = math.sqrt((n.i - e.i)**2 + (n.j - e.j)**2)
     #d = abs(n.i - e.i) + abs(n.j - e.j)
     return d
 
-#_____________________________________
+
 def main():
     end.show((255, 8, 127), 0)
     start.show((255, 8, 127), 0)
@@ -202,10 +199,9 @@ def main():
         closedSet.append(current)
 
         neighbors = current.neighbors
-
         for i in range(len(neighbors)):
             neighbor = neighbors[i]
-            if neighbor in closedSet:
+            if neighbor not in closedSet:
                 tempG = current.g + current.value
                 if neighbor in openSet:
                     if neighbor.g > tempG:
@@ -215,11 +211,10 @@ def main():
                     openSet.append(neighbor)
 
             neighbor.h = heurisitic(neighbor, end)
-            neighbor.f = neighbor.h + neighbor.g
+            neighbor.f = neighbor.g + neighbor.h
 
             if neighbor.previous == None:
                 neighbor.previous = current
-
     if var.get():
         for i in range(len(openSet)):
             openSet[i].show(green, 0)
@@ -229,11 +224,11 @@ def main():
                 closedSet[i].show(red, 0)
     current.closed = True
 
+
 while True:
     ev = pygame.event.poll()
     if ev.type == pygame.QUIT:
         pygame.quit()
-    
     pygame.display.update()
     main()
 
