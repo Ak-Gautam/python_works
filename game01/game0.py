@@ -130,8 +130,8 @@ def mousePress(x):
             acess.obs = True
             acess.show((255, 255, 255), 0)
 
-end.show((255, 8, 127), 0)
-start.show((255, 8, 127), 0)
+end.show((0, 250, 180), 0)
+start.show((0, 180, 250), 0)
 
 loop = True
 while loop:
@@ -162,8 +162,8 @@ def heurisitic(n, e):
 
 
 def main():
-    end.show((255, 8, 127), 0)
-    start.show((255, 8, 127), 0)
+    end.show((0, 250, 180), 0)
+    start.show((0, 180, 250), 0)
     if len(openSet) > 0:
         lowestIndex = 0
         for i in range(len(openSet)):
@@ -173,13 +173,13 @@ def main():
         current = openSet[lowestIndex]
         if current == end:
             print('done', current.f)
-            start.show((255,8,127),0)
+            start.show((0, 180, 250),0)
             temp = current.f
             for i in range(round(current.f)):
                 current.closed = False
                 current.show((0,0,255), 0)
                 current = current.previous
-            end.show((255, 8, 127), 0)
+            end.show((0, 250, 180), 0)
 
             Tk().wm_withdraw()
             result = messagebox.askokcancel('Program Finished', ('The program finished, the shortest distance \n to the path is ' + str(temp) + ' blocks away, \n would you like to re run the program?'))
