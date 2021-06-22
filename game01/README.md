@@ -4,7 +4,29 @@ Desc: A GUI app made in python that can show shortest distance between two block
 Author: '@Gautam-flash'
 ---
 
-# Path Finder
+# Path Finder V2.0
+![Screenshot](images/det2.0.0.png)
+
+#### This version is faster in execution compared to previous version (v1.0)
+
+The project uses a single gui library now:
+- Pygame for everything
+
+![Screenshot](images/det2.0.3.png)
+
+## How to run
+- Download the python file "PathFinder.py" on your machine.
+- Make sure you have Python3 installed
+- Double click on the file or type `python PathFinder.py` in cmd prompt and hit enter.
+- First left click on the cube will be start node
+- second left click on the cube will be end node
+- 3rd and beyond clicks can be used to create obstacles (you can click and drag)
+- right click works as eraser for obstacles
+- press space to start
+
+![Screenshot](images/finished2.0.png)
+
+# Path Finder V1.0
 
 ![screenshot](images/start.png)
 
